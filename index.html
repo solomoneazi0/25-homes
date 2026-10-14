@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>25 Homes</title>
     <script src="./vendor/react.js"></script>
     <script src="./vendor/react-dom.js"></script>
@@ -139,7 +140,7 @@
         margin: 18px 0 0;
         font-family: "Archivo", system-ui, sans-serif;
         font-weight: 700;
-        font-size: clamp(22px, 2.4vw, 32px);
+        font-size: clamp(22px, 6.5vw, 32px);
         line-height: 1.28;
         letter-spacing: -0.025em;
         color: #111110;
@@ -162,25 +163,24 @@
           min-height: 400px;
         }
       }
-      @media (max-width: 700px) {
+      @media (max-width: 760px) {
         .testimonial-header {
-          padding: 0 20px 40px;
+          padding: 0 20px 32px;
         }
         .testimonial-stack {
           padding: 0 20px;
         }
         .testimonial-card {
-          position: static;
+          top: 72px;
           min-height: 0;
           padding: 28px 22px 24px;
           margin-bottom: 16px;
-          box-shadow: none;
         }
         .testimonial-quote {
-          font-size: 22px;
+          font-size: 24px;
         }
         .testimonial-spacer {
-          display: none;
+          height: 28vh;
         }
       }
       @media (prefers-reduced-motion: reduce) {
@@ -191,6 +191,14 @@
         }
         .testimonial-spacer {
           display: none;
+        }
+        [data-ease="why"],
+        [data-ease="projects"] {
+          padding-bottom: 0;
+        }
+        [data-ease="why"] > div,
+        [data-ease="projects"] > a {
+          position: static;
         }
       }
       @media (prefers-reduced-motion: reduce) {
@@ -265,21 +273,330 @@
         border-right: 1px solid rgba(17, 17, 17, 0.28);
         border-bottom: 1px solid rgba(17, 17, 17, 0.28);
       }
-      @media (max-width: 700px) {
+      .nav-toggle {
+        display: none;
+        width: 44px;
+        height: 44px;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: #111110;
+        cursor: pointer;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 2;
+      }
+      .nav-toggle-bars {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 22px;
+      }
+      .nav-toggle-bars span {
+        display: block;
+        height: 2px;
+        background: currentColor;
+        transform-origin: center;
+        transition: transform 200ms ease, opacity 200ms ease;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .nav-toggle-bars span {
+          transition: none;
+        }
+      }
+      .site-header.is-open .nav-toggle-bars span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      .site-header.is-open .nav-toggle-bars span:nth-child(2) {
+        opacity: 0;
+      }
+      .site-header.is-open .nav-toggle-bars span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+      @media (max-width: 760px) {
+        html {
+          scroll-padding-top: 76px;
+        }
+        .site-shell {
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+        }
+        .site-frame {
+          overflow: visible;
+        }
+        .site-header {
+          position: sticky !important;
+          top: 0 !important;
+          z-index: 80 !important;
+          flex-wrap: nowrap !important;
+          gap: 12px !important;
+          padding: 8px 12px 8px 20px !important;
+          background: #f4f3ef !important;
+          border-bottom: 1px solid rgba(17, 17, 17, 0.28);
+        }
+        .site-header.is-open {
+          transform: none !important;
+          opacity: 1 !important;
+        }
+        .site-logo {
+          position: relative;
+          z-index: 2;
+          font-size: 22px !important;
+          min-width: 0;
+        }
+        .nav-toggle {
+          display: inline-flex;
+        }
+        .site-nav {
+          display: none !important;
+        }
+        .site-header.is-open .site-nav {
+          display: flex !important;
+          position: fixed;
+          z-index: 1;
+          inset: 0;
+          flex-direction: column !important;
+          justify-content: flex-start;
+          align-items: stretch;
+          gap: 0 !important;
+          margin: 0;
+          padding: 76px 12px 32px !important;
+          background: #f4f3ef;
+          overflow-y: auto;
+          font-size: 16px !important;
+        }
+        .site-header.is-open .site-nav a {
+          display: flex;
+          align-items: center;
+          min-height: 56px;
+          padding: 8px 12px;
+          border-bottom: 1px solid rgba(17, 17, 17, 0.18);
+          font-family: "Archivo", system-ui, sans-serif;
+          font-weight: 800;
+          font-size: 32px;
+          letter-spacing: -0.03em;
+          line-height: 1.1;
+          text-transform: uppercase;
+        }
+        body.nav-open {
+          overflow: hidden;
+        }
+        .site-frame h1 {
+          font-size: clamp(40px, 12.5vw, 52px) !important;
+          line-height: 0.96 !important;
+          overflow-wrap: normal;
+        }
+        .site-frame h2 {
+          font-size: clamp(30px, 9vw, 38px) !important;
+          line-height: 1.05 !important;
+        }
+        .site-frame h3 {
+          font-size: clamp(22px, 6.8vw, 28px) !important;
+          line-height: 1.15 !important;
+        }
+        .site-frame p {
+          font-size: 17px !important;
+          line-height: 1.6 !important;
+        }
+        #f-status {
+          font-size: 15px !important;
+          line-height: 1.5 !important;
+        }
+        .site-frame label {
+          font-size: 15px !important;
+        }
+        #top {
+          padding: 36px 20px 0 !important;
+        }
+        #top h1 {
+          margin-top: 16px !important;
+        }
+        #top p {
+          margin-top: 16px !important;
+        }
+        #top > a {
+          margin-top: 24px !important;
+          padding: 16px 28px !important;
+          font-size: 15px !important;
+          min-height: 48px;
+          box-sizing: border-box;
+        }
+        #top .image-zoom {
+          margin-top: 32px !important;
+          height: 280px !important;
+        }
+        .site-frame section:not(#top) {
+          margin-top: 56px !important;
+        }
+        .site-frame [style*="padding: 0 40px 56px"],
+        .site-frame [style*="padding: 0 40px 0"] {
+          padding-left: 20px !important;
+          padding-right: 20px !important;
+        }
+        .site-frame [style*="padding: 72px 40px"] {
+          padding: 36px 20px 28px !important;
+        }
+        .site-frame [style*="padding: 96px 40px"] {
+          padding: 48px 20px !important;
+        }
+        .site-frame [style*="padding: 56px 40px"] {
+          padding: 28px 20px !important;
+        }
+        .site-frame [style*="padding: 48px 40px"] {
+          padding: 28px 20px !important;
+        }
+        .site-frame [style*="padding: 40px;"],
+        .site-frame [style*="padding: 40px\n"] {
+          padding: 24px 20px !important;
+        }
+        .site-frame [style*="padding: 20px 28px"] {
+          padding: 16px 20px !important;
+        }
+        .site-frame [style*="padding: 24px 28px 32px"] {
+          padding: 20px !important;
+        }
+        .site-frame [style*="padding: 32px 28px 40px"] {
+          padding: 24px 20px 28px !important;
+        }
+        .stats-row {
+          display: grid !important;
+          grid-template-columns: 1fr 1fr;
+        }
+        .stats-row > div {
+          flex: none !important;
+          width: auto !important;
+          min-width: 0 !important;
+          padding: 28px 12px !important;
+        }
+        .stats-row > div:nth-child(2n) {
+          border-right: 0 !important;
+        }
+        .stats-row > div:nth-child(n + 3) {
+          border-top: 1px solid rgba(17, 17, 17, 0.28);
+        }
+        .stats-row [data-stat-index] {
+          font-size: clamp(36px, 11vw, 52px) !important;
+        }
+        .stats-row [data-stat-index] + div {
+          font-size: 12px !important;
+          line-height: 1.4 !important;
+        }
+        [data-ease="services"] > div {
+          flex-direction: column !important;
+        }
+        [data-ease="services"] > div > div {
+          flex: 1 1 auto !important;
+          width: 100% !important;
+        }
+        [data-ease="services"] .image-zoom {
+          flex: none !important;
+          width: 100% !important;
+          min-height: 0 !important;
+          height: 260px !important;
+          border-left: 0 !important;
+          border-top: 1px solid rgba(17, 17, 17, 0.28);
+        }
+        [data-ease="why"] > div,
+        [data-ease="projects"] > a {
+          flex: 1 1 100% !important;
+          border-right: 0 !important;
+        }
+        [data-ease="why"],
+        [data-ease="projects"] {
+          display: block !important;
+          padding-bottom: 28vh;
+        }
+        [data-ease="why"] > div,
+        [data-ease="projects"] > a {
+          position: sticky;
+          top: 72px;
+          background: #f4f3ef;
+          width: 100% !important;
+        }
+        [data-ease="why"] > div:nth-child(1) { z-index: 1; }
+        [data-ease="why"] > div:nth-child(2) { z-index: 2; }
+        [data-ease="why"] > div:nth-child(3) { z-index: 3; }
+        [data-ease="why"] > div:nth-child(4) { z-index: 4; }
+        [data-ease="why"] > div:nth-child(5) { z-index: 5; }
+        [data-ease="why"] > div:nth-child(6) { z-index: 6; }
+        [data-ease="projects"] > a:nth-child(1) { z-index: 1; }
+        [data-ease="projects"] > a:nth-child(2) { z-index: 2; }
+        [data-ease="projects"] > a:nth-child(3) { z-index: 3; }
+        [data-ease="projects"] > a:nth-child(4) { z-index: 4; }
+        [data-ease="projects"] .image-zoom {
+          height: 280px !important;
+        }
+        [data-ease="projects"] [style*="padding: 24px 28px 32px"] {
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          gap: 8px !important;
+        }
+        [data-ease="projects"] [style*="font-size: 24px"] {
+          font-size: 26px !important;
+        }
+        [data-ease="projects"] [style*="font-size: 14px"] {
+          font-size: 13px !important;
+        }
         .gallery-track {
-          flex-wrap: nowrap;
-          overflow-x: auto;
+          flex-wrap: nowrap !important;
+          overflow-x: auto !important;
           overscroll-behavior-x: contain;
           scroll-snap-type: x mandatory;
           -webkit-overflow-scrolling: touch;
         }
-        .gallery-item {
-          flex: 0 0 50%;
-          height: 260px;
-          scroll-snap-align: start;
+        .gallery-item:first-child {
+          display: none !important;
         }
-        .gallery-item:nth-child(even) {
-          scroll-snap-align: none;
+        .gallery-item {
+          flex: 0 0 50% !important;
+          height: 260px !important;
+          scroll-snap-align: start !important;
+        }
+        .gallery-item:nth-child(odd) {
+          scroll-snap-align: none !important;
+        }
+        #faq [data-ease="faq"] > form,
+        #faq [data-ease="faq"] > div {
+          flex: 1 1 100% !important;
+          width: 100% !important;
+          border-right: 0 !important;
+        }
+        .form-split {
+          flex-direction: column !important;
+        }
+        .form-split > div {
+          flex: 1 1 auto !important;
+          width: 100% !important;
+        }
+        #contact input,
+        #contact textarea {
+          width: 100% !important;
+          font-size: 16px !important;
+          box-sizing: border-box !important;
+        }
+        #contact button {
+          width: 100% !important;
+          min-height: 48px;
+          font-size: 15px !important;
+        }
+        .testimonial-mark {
+          font-size: 56px !important;
+        }
+        footer > div > div {
+          flex: 1 1 100% !important;
+          width: 100% !important;
+          border-right: 0 !important;
+        }
+        footer a {
+          font-size: 16px !important;
+          line-height: 1.4;
+          min-height: 44px;
+          display: inline-flex;
+          align-items: center;
         }
       }
     </style>
@@ -319,6 +636,7 @@
       </helmet>
 
       <div
+        class="site-shell"
         style="
           width: 100%;
           background: #f4f3ef;
@@ -329,6 +647,7 @@
         "
       >
         <div
+          class="site-frame"
           style="
             max-width: 1440px;
             margin: 0 auto;
@@ -353,7 +672,7 @@
 
           <!-- NAV -->
           <header
-            class="ease-in"
+            class="site-header ease-in"
             data-ease="header"
             style="
               display: flex;
@@ -365,6 +684,7 @@
             "
           >
             <a
+              class="site-logo"
               href="#top"
               style="
                 display: flex;
@@ -389,6 +709,8 @@
               <span>25 Homes</span>
             </a>
             <nav
+              id="site-nav"
+              class="site-nav"
               aria-label="Primary"
               style="
                 display: flex;
@@ -405,6 +727,19 @@
               <a href="#services">Services</a>
               <a href="#contact">Contact</a>
             </nav>
+            <button
+              type="button"
+              class="nav-toggle"
+              aria-expanded="false"
+              aria-controls="site-nav"
+              aria-label="Open menu"
+            >
+              <span class="nav-toggle-bars" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
           </header>
 
           <!-- HERO -->
@@ -595,7 +930,7 @@
             </div>
             <div
               id="stats-figures"
-              class="ease-in"
+              class="ease-in stats-row"
               data-ease="stats"
               style="
                 display: flex;
@@ -954,7 +1289,7 @@
               </p>
             </div>
             <div
-              class="ease-in"
+              class="ease-in ease-in-fade"
               data-ease="why"
               style="
                 display: flex;
@@ -1151,7 +1486,7 @@
               </p>
             </div>
             <div
-              class="ease-in"
+              class="ease-in ease-in-fade"
               data-ease="projects"
               style="
                 display: flex;
@@ -1832,9 +2167,33 @@
                   background: #ffffff;
                   border-right: 1px solid rgba(17, 17, 17, 0.28);
                   display: block;
+                  position: relative;
                 "
                 onsubmit="return false;"
               >
+                <div
+                  aria-hidden="true"
+                  style="
+                    position: absolute;
+                    width: 1px;
+                    height: 1px;
+                    padding: 0;
+                    margin: -1px;
+                    overflow: hidden;
+                    clip: rect(0, 0, 0, 0);
+                    white-space: nowrap;
+                    border: 0;
+                  "
+                >
+                  <label for="f-company">Company</label>
+                  <input
+                    id="f-company"
+                    name="company"
+                    type="text"
+                    tabindex="-1"
+                    autocomplete="off"
+                  />
+                </div>
                 <div
                   style="
                     padding: 40px;
@@ -1863,7 +2222,10 @@
                     gap: 24px;
                   "
                 >
-                  <div style="display: flex; flex-wrap: wrap; gap: 24px">
+                  <div
+                    class="form-split"
+                    style="display: flex; flex-wrap: wrap; gap: 24px"
+                  >
                     <div
                       style="
                         flex: 1 1 180px;
@@ -2000,6 +2362,17 @@
                   >
                     Submit form
                   </button>
+                  <p
+                    id="f-status"
+                    data-form-status
+                    hidden
+                    style="
+                      margin: 0;
+                      font-size: 14px;
+                      line-height: 1.5;
+                      color: #111110;
+                    "
+                  ></p>
                 </div>
               </form>
               <div style="flex: 1.2 1 460px; box-sizing: border-box">
@@ -3007,6 +3380,213 @@
           });
         });
         mo.observe(document.documentElement, {
+          childList: true,
+          subtree: true,
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var bound = new WeakSet();
+
+        function showStatus(status, message, isError) {
+          status.hidden = false;
+          status.textContent = message;
+          status.style.color = isError ? "#e5481f" : "#111110";
+        }
+
+        function validEmail(value) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        }
+
+        function bind(form) {
+          if (!form || bound.has(form)) return;
+          if (form.closest && form.closest("x-dc")) return;
+          var button = form.querySelector("button");
+          var status = form.querySelector("[data-form-status]");
+          var name = form.querySelector("#f-name");
+          var email = form.querySelector("#f-email");
+          var phone = form.querySelector("#f-phone");
+          var message = form.querySelector("#f-msg");
+          var company = form.querySelector("#f-company");
+          if (!button || !status || !name || !email || !message) return;
+          bound.add(form);
+          var label = button.textContent;
+
+          button.addEventListener("click", function () {
+            if (button.disabled) return;
+            var nameValue = name.value.trim();
+            var emailValue = email.value.trim();
+            var phoneValue = phone ? phone.value.trim() : "";
+            var messageValue = message.value.trim();
+            if (!nameValue) {
+              showStatus(status, "Enter your name.", true);
+              name.focus();
+              return;
+            }
+            if (!validEmail(emailValue)) {
+              showStatus(status, "Enter a valid email address.", true);
+              email.focus();
+              return;
+            }
+            if (!messageValue) {
+              showStatus(status, "Enter a message.", true);
+              message.focus();
+              return;
+            }
+
+            var width = button.offsetWidth;
+            var height = button.offsetHeight;
+            button.disabled = true;
+            button.setAttribute("aria-busy", "true");
+            button.style.boxSizing = "border-box";
+            button.style.width = width + "px";
+            button.style.height = height + "px";
+            button.textContent = "Sending...";
+            status.hidden = true;
+            status.textContent = "";
+
+            fetch("/api/contact", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                name: nameValue,
+                email: emailValue,
+                phone: phoneValue,
+                message: messageValue,
+                company: company ? company.value : "",
+              }),
+            })
+              .then(function (response) {
+                return response.json().then(
+                  function (data) {
+                    return { ok: response.ok, data: data || {} };
+                  },
+                  function () {
+                    return { ok: false, data: {} };
+                  },
+                );
+              })
+              .then(function (result) {
+                if (!result.ok || !result.data.ok) {
+                  showStatus(
+                    status,
+                    result.data.error ||
+                      "We couldn't send your message. Please try again.",
+                    true,
+                  );
+                  return;
+                }
+                form.reset();
+                showStatus(
+                  status,
+                  "Thank you. Your message has been sent.",
+                  false,
+                );
+              })
+              .catch(function () {
+                showStatus(
+                  status,
+                  "We couldn't send your message. Please try again.",
+                  true,
+                );
+              })
+              .then(function () {
+                button.disabled = false;
+                button.removeAttribute("aria-busy");
+                button.style.width = "";
+                button.style.height = "";
+                button.style.boxSizing = "";
+                button.textContent = label;
+              });
+          });
+        }
+
+        function scan(node) {
+          if (!node || node.nodeType !== 1) return;
+          if (node.closest && node.closest("x-dc")) return;
+          if (node.id === "contact") bind(node);
+          if (node.querySelector) {
+            var form = node.querySelector("#contact");
+            if (form) bind(form);
+          }
+        }
+
+        var watcher = new MutationObserver(function (records) {
+          records.forEach(function (rec) {
+            Array.prototype.forEach.call(rec.addedNodes, function (node) {
+              scan(node);
+            });
+          });
+        });
+        watcher.observe(document.documentElement, {
+          childList: true,
+          subtree: true,
+        });
+        scan(document.getElementById("contact") || document.documentElement);
+      })();
+    </script>
+    <script>
+      (function () {
+        var scrollY = 0;
+        function header() {
+          return document.querySelector(".site-header");
+        }
+        function unlock() {
+          if (!document.body.classList.contains("nav-open")) return;
+          document.body.classList.remove("nav-open");
+          document.body.style.position = "";
+          document.body.style.top = "";
+          document.body.style.left = "";
+          document.body.style.right = "";
+          document.body.style.width = "";
+          window.scrollTo(0, scrollY);
+        }
+        function lock() {
+          if (document.body.classList.contains("nav-open")) return;
+          scrollY = window.scrollY || 0;
+          document.body.classList.add("nav-open");
+          document.body.style.position = "fixed";
+          document.body.style.top = "-" + scrollY + "px";
+          document.body.style.left = "0";
+          document.body.style.right = "0";
+          document.body.style.width = "100%";
+        }
+        function setOpen(open) {
+          var el = header();
+          var toggle = el && el.querySelector(".nav-toggle");
+          if (!el || !toggle) {
+            unlock();
+            return;
+          }
+          el.classList.toggle("is-open", open);
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+          toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+          if (open) lock();
+          else unlock();
+        }
+        document.addEventListener("click", function (e) {
+          var el = header();
+          if (!el || !e.target.closest) return;
+          var toggle = e.target.closest(".nav-toggle");
+          if (toggle && el.contains(toggle)) {
+            setOpen(!el.classList.contains("is-open"));
+            return;
+          }
+          var link = e.target.closest("a");
+          if (link && el.contains(link) && el.classList.contains("is-open"))
+            setOpen(false);
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") setOpen(false);
+        });
+        window.addEventListener("resize", function () {
+          if (window.innerWidth > 760) setOpen(false);
+        });
+        new MutationObserver(function () {
+          var el = header();
+          if (!el || !el.classList.contains("is-open")) unlock();
+        }).observe(document.documentElement, {
           childList: true,
           subtree: true,
         });
