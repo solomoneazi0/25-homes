@@ -1,0 +1,3016 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>25 Homes</title>
+    <script src="./vendor/react.js"></script>
+    <script src="./vendor/react-dom.js"></script>
+    <script src="./support.js"></script>
+    <style>
+      .js-typing h1[data-type] .tw,
+      .js-typing h2[data-type] .tw {
+        display: inline-block;
+        white-space: nowrap;
+      }
+      .js-typing h1[data-type] .tw-gap,
+      .js-typing h2[data-type] .tw-gap {
+        display: inline;
+        white-space: pre;
+      }
+      .js-typing h1[data-type] .ch,
+      .js-typing h2[data-type] .ch {
+        opacity: 0;
+        transform: translateY(0.15em);
+        filter: blur(2px);
+        transition:
+          opacity 180ms ease-out,
+          transform 180ms ease-out,
+          filter 180ms ease-out;
+        display: inline-block;
+        letter-spacing: normal;
+      }
+      .js-typing h1[data-type] .ch.on,
+      .js-typing h2[data-type] .ch.on {
+        opacity: 1;
+        transform: none;
+        filter: none;
+      }
+      .type-caret {
+        display: inline-block;
+        width: 0;
+        height: 1em;
+        position: relative;
+        vertical-align: baseline;
+        pointer-events: none;
+      }
+      .type-caret::after {
+        content: "";
+        position: absolute;
+        left: 0.04em;
+        top: 0.1em;
+        width: 0.06em;
+        height: 0.85em;
+        background: #e5481f;
+        animation: caret-soft 1s ease-in-out infinite;
+      }
+      .type-caret.is-done::after {
+        animation: caret-fade 300ms ease-out forwards;
+      }
+      @keyframes caret-soft {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.15;
+        }
+      }
+      @keyframes caret-fade {
+        to {
+          opacity: 0;
+        }
+      }
+      .js-typing .type-reveal {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      .js-typing .type-reveal.is-in {
+        opacity: 1;
+        transform: none;
+        transition:
+          opacity 500ms ease-out,
+          transform 500ms ease-out;
+      }
+      .js-typing .type-reveal.no-anim.is-in {
+        transition: none;
+      }
+      .js-typing .type-reveal-soft {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      .js-typing .type-reveal-soft.is-in {
+        opacity: 1;
+        transform: none;
+        transition:
+          opacity 850ms cubic-bezier(0.22, 1, 0.36, 1),
+          transform 850ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .js-typing .type-reveal-soft.no-anim.is-in {
+        transition: none;
+      }
+      .testimonial-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 0 40px 56px;
+        box-sizing: border-box;
+      }
+      .testimonial-stack {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 0 40px 0;
+        box-sizing: border-box;
+      }
+      .testimonial-card {
+        position: sticky;
+        top: 24px;
+        margin: 0;
+        padding: 44px 48px 40px;
+        box-sizing: border-box;
+        min-height: 420px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 40px;
+        background: #f4f3ef;
+        border: 1px solid rgba(17, 17, 17, 0.28);
+        box-shadow: 0 18px 48px rgba(17, 17, 17, 0.07);
+      }
+      .testimonial-mark {
+        font-family: "Archivo", system-ui, sans-serif;
+        font-weight: 800;
+        font-size: 72px;
+        line-height: 0.7;
+        letter-spacing: -0.04em;
+        color: #111110;
+      }
+      .testimonial-quote {
+        margin: 18px 0 0;
+        font-family: "Archivo", system-ui, sans-serif;
+        font-weight: 700;
+        font-size: clamp(22px, 2.4vw, 32px);
+        line-height: 1.28;
+        letter-spacing: -0.025em;
+        color: #111110;
+      }
+      .testimonial-name {
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .testimonial-role {
+        margin-top: 6px;
+        color: #6b6a65;
+      }
+      .testimonial-spacer {
+        height: 46vh;
+      }
+      @media (max-width: 900px) {
+        .testimonial-card {
+          padding: 36px 28px 32px;
+          min-height: 400px;
+        }
+      }
+      @media (max-width: 700px) {
+        .testimonial-header {
+          padding: 0 20px 40px;
+        }
+        .testimonial-stack {
+          padding: 0 20px;
+        }
+        .testimonial-card {
+          position: static;
+          min-height: 0;
+          padding: 28px 22px 24px;
+          margin-bottom: 16px;
+          box-shadow: none;
+        }
+        .testimonial-quote {
+          font-size: 22px;
+        }
+        .testimonial-spacer {
+          display: none;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .testimonial-card {
+          position: static;
+          min-height: 0;
+          margin-bottom: 16px;
+        }
+        .testimonial-spacer {
+          display: none;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .js-typing h1[data-type] .ch,
+        .js-typing h2[data-type] .ch {
+          opacity: 1;
+          transform: none;
+          filter: none;
+          transition: none;
+        }
+        .type-caret {
+          display: none;
+        }
+        .js-typing .type-reveal,
+        .js-typing .type-reveal-soft,
+        .js-typing .ease-in {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .image-zoom {
+        overflow: hidden;
+      }
+      .image-zoom img {
+        transform: scale(1);
+        transform-origin: center center;
+        transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      @media (hover: hover) and (pointer: fine) {
+        .image-zoom:hover img {
+          transform: scale(1.06);
+        }
+      }
+      .image-zoom:focus-within img {
+        transform: scale(1.06);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .image-zoom img {
+          transition: none;
+        }
+        .image-zoom:hover img,
+        .image-zoom:focus-within img {
+          transform: none;
+        }
+      }
+      .js-typing .ease-in {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      .js-typing .ease-in.ease-in-fade {
+        transform: none;
+      }
+      .js-typing .ease-in.is-in {
+        opacity: 1;
+        transform: none;
+        transition:
+          opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+          transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .js-typing .ease-in.no-anim.is-in {
+        transition: none;
+      }
+      .gallery-track {
+        display: flex;
+        flex-wrap: wrap;
+        border-top: 1px solid rgba(17, 17, 17, 0.28);
+      }
+      .gallery-item {
+        flex: 1 1 300px;
+        height: 420px;
+        box-sizing: border-box;
+        border-right: 1px solid rgba(17, 17, 17, 0.28);
+        border-bottom: 1px solid rgba(17, 17, 17, 0.28);
+      }
+      @media (max-width: 700px) {
+        .gallery-track {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          overscroll-behavior-x: contain;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+        }
+        .gallery-item {
+          flex: 0 0 50%;
+          height: 260px;
+          scroll-snap-align: start;
+        }
+        .gallery-item:nth-child(even) {
+          scroll-snap-align: none;
+        }
+      }
+    </style>
+    <script>
+      (function () {
+        try {
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+            return;
+          document.documentElement.classList.add("js-typing");
+        } catch (err) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap"
+          rel="stylesheet"
+        />
+        <style>
+          body {
+            margin: 0;
+            background: #f4f3ef;
+            color: #111110;
+            font-family: "IBM Plex Mono", ui-monospace, monospace;
+          }
+          a {
+            color: inherit;
+            text-decoration: none;
+          }
+          button {
+            font-family: inherit;
+          }
+        </style>
+      </helmet>
+
+      <div
+        style="
+          width: 100%;
+          background: #f4f3ef;
+          color: #111110;
+          font-family: &quot;IBM Plex Mono&quot;, ui-monospace, monospace;
+          box-sizing: border-box;
+          padding: 0 16px;
+        "
+      >
+        <div
+          style="
+            max-width: 1440px;
+            margin: 0 auto;
+            border-left: 1px solid rgba(17, 17, 17, 0.28);
+            border-right: 1px solid rgba(17, 17, 17, 0.28);
+            box-sizing: border-box;
+          "
+        >
+          <!-- RULER STRIP -->
+          <div
+            aria-hidden="true"
+            style="
+              height: 14px;
+              border-bottom: 1px solid rgba(17, 17, 17, 0.28);
+              background-image: repeating-linear-gradient(
+                90deg,
+                rgba(17, 17, 17, 0.55) 0 1px,
+                transparent 1px 10px
+              );
+            "
+          ></div>
+
+          <!-- NAV -->
+          <header
+            class="ease-in"
+            data-ease="header"
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              align-items: center;
+              justify-content: space-between;
+              gap: 16px 32px;
+              padding: 28px 40px;
+            "
+          >
+            <a
+              href="#top"
+              style="
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                font-weight: 800;
+                font-size: 28px;
+                letter-spacing: -0.02em;
+                text-transform: uppercase;
+              "
+            >
+              <span
+                aria-hidden="true"
+                style="
+                  display: inline-block;
+                  width: 26px;
+                  height: 26px;
+                  background: #111110;
+                "
+              ></span>
+              <span>25 Homes</span>
+            </a>
+            <nav
+              aria-label="Primary"
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px 36px;
+                font-size: 16px;
+                font-weight: 500;
+                letter-spacing: 0.02em;
+                text-transform: uppercase;
+              "
+            >
+              <a href="#projects">Work</a>
+              <a href="#studio">Studio</a>
+              <a href="#services">Services</a>
+              <a href="#contact">Contact</a>
+            </nav>
+          </header>
+
+          <!-- HERO -->
+          <section
+            id="top"
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              text-align: center;
+              padding: 72px 40px 0;
+              box-sizing: border-box;
+            "
+          >
+            <div
+              class="ease-in"
+              data-ease="hero-kicker"
+              data-ease-delay="120"
+              style="
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 14px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #6b6a65;
+              "
+            >
+              <span
+                aria-hidden="true"
+                style="
+                  display: inline-block;
+                  width: 12px;
+                  height: 12px;
+                  background: #111110;
+                "
+              ></span>
+              <span>Construction • Interiors</span>
+            </div>
+            <h1
+              id="hero-heading"
+              data-type
+              data-type-trigger="load"
+              data-type-delay="300"
+              style="
+                margin: 24px 0 0;
+                font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                font-weight: 800;
+                font-size: clamp(44px, 8vw, 112px);
+                line-height: 0.95;
+                letter-spacing: -0.04em;
+                text-transform: uppercase;
+                max-width: 1100px;
+              "
+            >
+              We build.<br />We design.
+            </h1>
+            <p
+              class="type-reveal"
+              data-type-follow="hero-heading"
+              style="
+                margin: 28px 0 0;
+                font-size: 18px;
+                line-height: 1.6;
+                color: #6b6a65;
+                max-width: 520px;
+              "
+            >
+              Creating spaces worth experiencing. From first sketch to final
+              handover, one studio for your home build and your interiors.
+            </p>
+            <a
+              class="type-reveal"
+              data-type-follow="hero-heading"
+              href="#projects"
+              style="
+                margin-top: 36px;
+                display: inline-block;
+                background: #111110;
+                color: #f4f3ef;
+                border: 2px solid #111110;
+                padding: 18px 36px;
+                font-weight: 600;
+                font-size: 16px;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+              "
+              >View our work</a
+            >
+
+            <div
+              class="image-zoom ease-in"
+              data-ease="hero-image"
+              data-ease-delay="220"
+              style="
+                margin-top: 72px;
+                width: 100%;
+                max-width: 1100px;
+                height: 520px;
+              "
+            >
+              <img
+                src="images/herosection.jpg"
+                alt="Finished 25 Homes exterior"
+                style="
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  display: block;
+                  box-sizing: border-box;
+                "
+              />
+            </div>
+          </section>
+
+          <!-- STATS -->
+          <section
+            aria-labelledby="stats-h"
+            style="
+              margin-top: 96px;
+              border-top: 1px solid rgba(17, 17, 17, 0.28);
+            "
+          >
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 24px 48px;
+                justify-content: space-between;
+                align-items: flex-end;
+                padding: 72px 40px 56px;
+              "
+            >
+              <div style="max-width: 620px">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 14px;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    color: #6b6a65;
+                  "
+                >
+                  <span
+                    aria-hidden="true"
+                    style="
+                      display: inline-block;
+                      width: 12px;
+                      height: 12px;
+                      background: #111110;
+                    "
+                  ></span
+                  ><span>By the numbers</span>
+                </div>
+                <h2
+                  data-type
+                  id="stats-h"
+                  style="
+                    margin: 20px 0 0;
+                    font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                    font-weight: 800;
+                    font-size: clamp(34px, 5vw, 60px);
+                    line-height: 1;
+                    letter-spacing: -0.035em;
+                    text-transform: uppercase;
+                  "
+                >
+                  Numbers that define our work
+                </h2>
+              </div>
+              <p
+                class="type-reveal-soft"
+                data-type-follow-start="stats-h"
+                data-type-follow-delay="400"
+                style="
+                  margin: 0;
+                  max-width: 380px;
+                  font-size: 16px;
+                  line-height: 1.6;
+                  color: #6b6a65;
+                "
+              >
+                Every number reflects careful building, honest work, and happy
+                homeowners.
+              </p>
+            </div>
+            <div
+              id="stats-figures"
+              class="ease-in"
+              data-ease="stats"
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                border-top: 1px solid rgba(17, 17, 17, 0.28);
+                border-bottom: 1px solid rgba(17, 17, 17, 0.28);
+              "
+            >
+              <sc-for list="{{stats}}" as="s" hint-placeholder-count="4">
+                <div
+                  style="
+                    flex: 1 1 240px;
+                    box-sizing: border-box;
+                    padding: 56px 24px;
+                    text-align: center;
+                    border-right: 1px solid rgba(17, 17, 17, 0.28);
+                  "
+                >
+                  <div
+                    data-stat-index="{{s.index}}"
+                    aria-label="{{s.final}}"
+                    style="
+                      font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                      font-weight: 800;
+                      font-size: clamp(48px, 6vw, 84px);
+                      letter-spacing: -0.04em;
+                      line-height: 1;
+                    "
+                  >
+                    {{s.value}}
+                  </div>
+                  <div
+                    style="
+                      margin-top: 16px;
+                      font-size: 14px;
+                      font-weight: 500;
+                      letter-spacing: 0.06em;
+                      text-transform: uppercase;
+                      color: #6b6a65;
+                    "
+                  >
+                    {{s.label}}
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </section>
+
+          <!-- SERVICES -->
+          <section
+            id="services"
+            aria-labelledby="services-h"
+            style="margin-top: 96px"
+          >
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 24px 48px;
+                justify-content: space-between;
+                align-items: flex-end;
+                padding: 0 40px 56px;
+              "
+            >
+              <div style="max-width: 620px">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 14px;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    color: #6b6a65;
+                  "
+                >
+                  <span
+                    aria-hidden="true"
+                    style="
+                      display: inline-block;
+                      width: 12px;
+                      height: 12px;
+                      background: #111110;
+                    "
+                  ></span
+                  ><span>Our services</span>
+                </div>
+                <h2
+                  data-type
+                  id="services-h"
+                  style="
+                    margin: 20px 0 0;
+                    font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                    font-weight: 800;
+                    font-size: clamp(34px, 5vw, 60px);
+                    line-height: 1;
+                    letter-spacing: -0.035em;
+                    text-transform: uppercase;
+                  "
+                >
+                  Explore our core services
+                </h2>
+              </div>
+              <p
+                class="type-reveal-soft"
+                data-type-follow-start="services-h"
+                data-type-follow-delay="400"
+                style="
+                  margin: 0;
+                  max-width: 380px;
+                  font-size: 16px;
+                  line-height: 1.6;
+                  color: #6b6a65;
+                "
+              >
+                Two disciplines under one roof: we build the home, then design
+                the spaces inside it.
+              </p>
+            </div>
+            <div
+              class="ease-in"
+              data-ease="services"
+              style="border-top: 1px solid rgba(17, 17, 17, 0.28)"
+            >
+              <sc-for list="{{services}}" as="svc" hint-placeholder-count="2">
+                <div
+                  style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    border-bottom: 1px solid rgba(17, 17, 17, 0.28);
+                  "
+                >
+                  <div
+                    style="
+                      flex: 1 1 440px;
+                      box-sizing: border-box;
+                      padding: 56px 40px;
+                    "
+                  >
+                    <div
+                      style="
+                        display: flex;
+                        align-items: baseline;
+                        gap: 16px;
+                        flex-wrap: wrap;
+                      "
+                    >
+                      <span
+                        style="
+                          font-size: 24px;
+                          color: #6b6a65;
+                          font-weight: 500;
+                        "
+                        >{{svc.num}}</span
+                      >
+                      <h3
+                        style="
+                          margin: 0;
+                          font-family:
+                            &quot;Archivo&quot;, system-ui, sans-serif;
+                          font-weight: 800;
+                          font-size: clamp(28px, 4vw, 44px);
+                          letter-spacing: -0.03em;
+                          text-transform: uppercase;
+                        "
+                      >
+                        {{svc.title}}
+                      </h3>
+                    </div>
+                    <p
+                      style="
+                        margin: 20px 0 0;
+                        max-width: 520px;
+                        font-size: 16px;
+                        line-height: 1.6;
+                        color: #6b6a65;
+                      "
+                    >
+                      {{svc.blurb}}
+                    </p>
+                    <div
+                      style="
+                        margin-top: 36px;
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 16px 40px;
+                        max-width: 640px;
+                      "
+                    >
+                      <sc-for
+                        list="{{svc.items}}"
+                        as="it"
+                        hint-placeholder-count="6"
+                      >
+                        <div
+                          style="
+                            flex: 1 1 220px;
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                            font-size: 15px;
+                            font-weight: 500;
+                            letter-spacing: 0.04em;
+                            text-transform: uppercase;
+                            color: #4a4944;
+                          "
+                        >
+                          <span
+                            aria-hidden="true"
+                            style="
+                              display: inline-block;
+                              width: 8px;
+                              height: 8px;
+                              background: #111110;
+                              flex: none;
+                            "
+                          ></span
+                          ><span>{{it.t}}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <sc-if
+                    value="{{svc.showImage}}"
+                    hint-placeholder-val="{{ false }}"
+                  >
+                    <div
+                      class="image-zoom"
+                      style="
+                        flex: 1 1 380px;
+                        min-height: 380px;
+                        position: relative;
+                        box-sizing: border-box;
+                        border-left: 1px solid rgba(17, 17, 17, 0.28);
+                        overflow: hidden;
+                      "
+                    >
+                      <img
+                        src="{{svc.src}}"
+                        alt="{{svc.title}}"
+                        style="
+                          position: absolute;
+                          inset: 0;
+                          width: 100%;
+                          height: 100%;
+                          object-fit: cover;
+                          display: block;
+                        "
+                      />
+                    </div>
+                  </sc-if>
+                  <sc-if
+                    value="{{svc.showPlaceholder}}"
+                    hint-placeholder-val="{{ true }}"
+                  >
+                    <div
+                      style="
+                        flex: 1 1 380px;
+                        min-height: 380px;
+                        box-sizing: border-box;
+                        border-left: 1px solid rgba(17, 17, 17, 0.28);
+                        border-top: 0;
+                        background-image: repeating-linear-gradient(
+                          135deg,
+                          rgba(17, 17, 17, 0.07) 0 1px,
+                          transparent 1px 12px
+                        );
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 24px;
+                        text-align: center;
+                      "
+                    >
+                      <div
+                        style="
+                          font-size: 14px;
+                          letter-spacing: 0.06em;
+                          text-transform: uppercase;
+                          color: #6b6a65;
+                          line-height: 1.7;
+                        "
+                      >
+                        Image placeholder<br />{{svc.img}}
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </section>
+
+          <!-- WHY US -->
+          <section id="why" aria-labelledby="why-h" style="margin-top: 96px">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 0 40px 56px;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  font-size: 14px;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: #6b6a65;
+                "
+              >
+                <span
+                  aria-hidden="true"
+                  style="
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    background: #111110;
+                  "
+                ></span
+                ><span>Why us?</span>
+              </div>
+              <h2
+                data-type
+                id="why-h"
+                style="
+                  margin: 20px 0 0;
+                  font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                  font-weight: 800;
+                  font-size: clamp(34px, 5vw, 60px);
+                  line-height: 1;
+                  letter-spacing: -0.035em;
+                  text-transform: uppercase;
+                  max-width: 720px;
+                "
+              >
+                What makes us different
+              </h2>
+              <p
+                class="type-reveal-soft"
+                data-type-follow-start="why-h"
+                data-type-follow-delay="400"
+                style="
+                  margin: 24px 0 0;
+                  max-width: 480px;
+                  font-size: 16px;
+                  line-height: 1.6;
+                  color: #6b6a65;
+                "
+              >
+                From first sketch to final handover, we focus on clarity,
+                craftsmanship and lasting results.
+              </p>
+            </div>
+            <div
+              class="ease-in"
+              data-ease="why"
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                border-top: 1px solid rgba(17, 17, 17, 0.28);
+              "
+            >
+              <sc-for list="{{why}}" as="w" hint-placeholder-count="6">
+                <div
+                  style="
+                    flex: 1 1 360px;
+                    box-sizing: border-box;
+                    border-right: 1px solid rgba(17, 17, 17, 0.28);
+                    border-bottom: 1px solid rgba(17, 17, 17, 0.28);
+                  "
+                >
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      padding: 20px 28px;
+                      border-bottom: 1px dashed rgba(17, 17, 17, 0.35);
+                      font-size: 14px;
+                      letter-spacing: 0.04em;
+                      text-transform: uppercase;
+                    "
+                  >
+                    <span style="font-weight: 500">{{w.tag}}</span
+                    ><span style="color: #6b6a65">{{w.num}}</span>
+                  </div>
+                  <sc-if
+                    value="{{w.showImage}}"
+                    hint-placeholder-val="{{ false }}"
+                  >
+                    <div
+                      style="
+                        width: 100%;
+                        height: 260px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 16px;
+                        box-sizing: border-box;
+                        overflow: hidden;
+                        border-bottom: 1px dashed rgba(17, 17, 17, 0.35);
+                      "
+                    >
+                      <img
+                        src="{{w.src}}"
+                        alt="{{w.title}}"
+                        style="
+                          display: block;
+                          width: 100%;
+                          height: 100%;
+                          min-width: 0;
+                          min-height: 0;
+                          object-fit: contain;
+                          object-position: center;
+                        "
+                      />
+                    </div>
+                  </sc-if>
+                  <sc-if
+                    value="{{w.showPlaceholder}}"
+                    hint-placeholder-val="{{ true }}"
+                  >
+                    <div
+                      style="
+                        height: 260px;
+                        box-sizing: border-box;
+                        border-bottom: 1px dashed rgba(17, 17, 17, 0.35);
+                        background-image: repeating-linear-gradient(
+                          135deg,
+                          rgba(17, 17, 17, 0.05) 0 1px,
+                          transparent 1px 12px
+                        );
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 24px;
+                        text-align: center;
+                      "
+                    >
+                      <div
+                        style="
+                          font-size: 13px;
+                          letter-spacing: 0.06em;
+                          text-transform: uppercase;
+                          color: #6b6a65;
+                          line-height: 1.7;
+                        "
+                      >
+                        Graphic placeholder<br />{{w.graphic}}
+                      </div>
+                    </div>
+                  </sc-if>
+                  <div style="padding: 32px 28px 40px">
+                    <h3
+                      style="
+                        margin: 0;
+                        font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                        font-weight: 800;
+                        font-size: 26px;
+                        line-height: 1.1;
+                        letter-spacing: -0.025em;
+                        text-transform: uppercase;
+                      "
+                    >
+                      {{w.title}}
+                    </h3>
+                    <p
+                      style="
+                        margin: 16px 0 0;
+                        font-size: 15px;
+                        line-height: 1.6;
+                        color: #6b6a65;
+                      "
+                    >
+                      {{w.body}}
+                    </p>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </section>
+
+          <!-- PROJECTS -->
+          <section
+            id="projects"
+            aria-labelledby="projects-h"
+            style="margin-top: 96px"
+          >
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 0 40px 56px;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  font-size: 14px;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: #6b6a65;
+                "
+              >
+                <span
+                  aria-hidden="true"
+                  style="
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    background: #111110;
+                  "
+                ></span
+                ><span>Our projects</span>
+              </div>
+              <h2
+                data-type
+                id="projects-h"
+                style="
+                  margin: 20px 0 0;
+                  font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                  font-weight: 800;
+                  font-size: clamp(34px, 5vw, 60px);
+                  line-height: 1;
+                  letter-spacing: -0.035em;
+                  text-transform: uppercase;
+                  max-width: 760px;
+                "
+              >
+                Homes we've brought to life
+              </h2>
+              <p
+                class="type-reveal-soft"
+                data-type-follow-start="projects-h"
+                data-type-follow-delay="400"
+                style="
+                  margin: 24px 0 0;
+                  max-width: 480px;
+                  font-size: 16px;
+                  line-height: 1.6;
+                  color: #6b6a65;
+                "
+              >
+                Every project reflects the same care, structure and attention to
+                detail we bring to all our work.
+              </p>
+            </div>
+            <div
+              class="ease-in"
+              data-ease="projects"
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                border-top: 1px solid rgba(17, 17, 17, 0.28);
+              "
+            >
+              <sc-for list="{{projects}}" as="p" hint-placeholder-count="4">
+                <a
+                  href="#contact"
+                  style="
+                    flex: 1 1 520px;
+                    box-sizing: border-box;
+                    border-right: 1px solid rgba(17, 17, 17, 0.28);
+                    border-bottom: 1px solid rgba(17, 17, 17, 0.28);
+                    display: block;
+                  "
+                >
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      padding: 20px 28px;
+                      border-bottom: 1px dashed rgba(17, 17, 17, 0.35);
+                      font-size: 14px;
+                      letter-spacing: 0.04em;
+                      text-transform: uppercase;
+                    "
+                  >
+                    <span style="font-weight: 500">{{p.cat}}</span
+                    ><span style="color: #6b6a65">{{p.num}}</span>
+                  </div>
+                  <sc-if
+                    value="{{p.showImage}}"
+                    hint-placeholder-val="{{ false }}"
+                  >
+                    <div class="image-zoom" style="height: 440px">
+                      <img
+                        src="{{p.src}}"
+                        alt="{{p.name}}"
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          object-fit: cover;
+                          display: block;
+                        "
+                      />
+                    </div>
+                  </sc-if>
+                  <sc-if
+                    value="{{p.showPlaceholder}}"
+                    hint-placeholder-val="{{ true }}"
+                  >
+                    <div
+                      style="
+                        height: 440px;
+                        box-sizing: border-box;
+                        background-image: repeating-linear-gradient(
+                          135deg,
+                          rgba(17, 17, 17, 0.07) 0 1px,
+                          transparent 1px 12px
+                        );
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 24px;
+                        text-align: center;
+                      "
+                    >
+                      <div
+                        style="
+                          font-size: 14px;
+                          letter-spacing: 0.06em;
+                          text-transform: uppercase;
+                          color: #6b6a65;
+                          line-height: 1.7;
+                        "
+                      >
+                        Image placeholder<br />{{p.img}}
+                      </div>
+                    </div>
+                  </sc-if>
+                  <div
+                    style="
+                      padding: 24px 28px 32px;
+                      border-top: 1px dashed rgba(17, 17, 17, 0.35);
+                      display: flex;
+                      flex-wrap: wrap;
+                      gap: 8px 24px;
+                      justify-content: space-between;
+                      align-items: baseline;
+                    "
+                  >
+                    <span
+                      style="
+                        font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                        font-weight: 800;
+                        font-size: 24px;
+                        letter-spacing: -0.02em;
+                        text-transform: uppercase;
+                      "
+                      >{{p.name}}</span
+                    >
+                    <span
+                      style="
+                        font-size: 14px;
+                        color: #6b6a65;
+                        letter-spacing: 0.04em;
+                        text-transform: uppercase;
+                      "
+                      >{{p.meta}}</span
+                    >
+                  </div>
+                </a>
+              </sc-for>
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px 32px;
+                align-items: center;
+                justify-content: space-between;
+                padding: 40px;
+              "
+            >
+              <p style="margin: 0; font-size: 16px; color: #6b6a65">
+                You've seen our work. Now, we can't wait to hear from you..
+              </p>
+              <a
+                href="#contact"
+                style="
+                  display: inline-block;
+                  background: #111110;
+                  color: #f4f3ef;
+                  border: 2px solid #111110;
+                  padding: 16px 32px;
+                  font-weight: 600;
+                  font-size: 15px;
+                  letter-spacing: 0.04em;
+                  text-transform: uppercase;
+                "
+                >SEND US A MESSAGE</a
+              >
+            </div>
+          </section>
+
+          <!-- STUDIO -->
+          <section
+            id="studio"
+            aria-labelledby="studio-h"
+            style="
+              border-top: 1px solid rgba(17, 17, 17, 0.28);
+              border-bottom: 1px solid rgba(17, 17, 17, 0.28);
+              display: flex;
+              flex-wrap: wrap;
+            "
+          >
+            <div
+              class="ease-in"
+              data-ease="studio-visual"
+              style="
+                flex: 1 1 440px;
+                min-height: 460px;
+                box-sizing: border-box;
+                background-image: repeating-linear-gradient(
+                  135deg,
+                  rgba(17, 17, 17, 0.07) 0 1px,
+                  transparent 1px 12px
+                );
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+                text-align: center;
+                border-right: 1px solid rgba(17, 17, 17, 0.28);
+              "
+            >
+              <div
+                style="
+                  font-size: 14px;
+                  letter-spacing: 0.06em;
+                  text-transform: uppercase;
+                  color: #6b6a65;
+                  line-height: 1.7;
+                "
+              >
+                Image placeholder<br />Studio · team on site or founder portrait
+              </div>
+            </div>
+            <div
+              style="
+                flex: 1 1 440px;
+                box-sizing: border-box;
+                padding: 72px 40px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 28px;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  font-size: 14px;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: #6b6a65;
+                "
+              >
+                <span
+                  aria-hidden="true"
+                  style="
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    background: #111110;
+                  "
+                ></span
+                ><span>Who we are</span>
+              </div>
+              <h2
+                data-type
+                id="studio-h"
+                style="
+                  margin: 0;
+                  font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                  font-weight: 800;
+                  font-size: clamp(28px, 4vw, 48px);
+                  line-height: 1.05;
+                  letter-spacing: -0.03em;
+                  text-transform: uppercase;
+                  max-width: 620px;
+                "
+              >
+                A home-building and interiors studio that cares how spaces feel
+                and function.
+              </h2>
+              <p
+                class="type-reveal-soft"
+                data-type-follow-start="studio-h"
+                data-type-follow-delay="400"
+                style="
+                  margin: 0;
+                  max-width: 520px;
+                  font-size: 16px;
+                  line-height: 1.6;
+                  color: #6b6a65;
+                "
+              >
+                At 25 Homes, we believe a great home starts with understanding
+                the people who live in it. We bring architecture, construction,
+                and interior design together to create spaces that feel
+                considered, function beautifully, and stand the test of time.
+              </p>
+              <a
+                class="ease-in"
+                data-ease="studio-link"
+                href="#contact"
+                style="
+                  align-self: flex-start;
+                  display: inline-block;
+                  border: 2px solid #111110;
+                  padding: 14px 28px;
+                  font-weight: 600;
+                  font-size: 15px;
+                  letter-spacing: 0.04em;
+                  text-transform: uppercase;
+                "
+                >About us</a
+              >
+            </div>
+          </section>
+
+          <!-- PROCESS -->
+          <section
+            id="process"
+            aria-labelledby="process-h"
+            style="display: none"
+          >
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 0 40px 56px;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  font-size: 14px;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: #6b6a65;
+                "
+              >
+                <span
+                  aria-hidden="true"
+                  style="
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    background: #111110;
+                  "
+                ></span
+                ><span>How we work</span>
+              </div>
+              <h2
+                data-type
+                id="process-h"
+                style="
+                  margin: 20px 0 0;
+                  font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                  font-weight: 800;
+                  font-size: clamp(34px, 5vw, 60px);
+                  line-height: 1;
+                  letter-spacing: -0.035em;
+                  text-transform: uppercase;
+                  max-width: 760px;
+                "
+              >
+                Crafting ideas into homes
+              </h2>
+              <p
+                class="type-reveal-soft"
+                data-type-follow-start="process-h"
+                data-type-follow-delay="400"
+                style="
+                  margin: 24px 0 0;
+                  max-width: 500px;
+                  font-size: 16px;
+                  line-height: 1.6;
+                  color: #6b6a65;
+                "
+              >
+                A clear, steady process that guides every project from the first
+                conversation to a finished, furnished home.
+              </p>
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                border-top: 1px solid rgba(17, 17, 17, 0.28);
+              "
+            >
+              <sc-for list="{{steps}}" as="st" hint-placeholder-count="3">
+                <div
+                  style="
+                    flex: 1 1 360px;
+                    box-sizing: border-box;
+                    border-right: 1px solid rgba(17, 17, 17, 0.28);
+                    border-bottom: 1px solid rgba(17, 17, 17, 0.28);
+                  "
+                >
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      padding: 20px 28px;
+                      border-bottom: 1px dashed rgba(17, 17, 17, 0.35);
+                      font-size: 14px;
+                      letter-spacing: 0.04em;
+                      text-transform: uppercase;
+                    "
+                  >
+                    <span style="font-weight: 500">Step</span
+                    ><span style="color: #6b6a65">{{st.num}}</span>
+                  </div>
+                  <div
+                    style="
+                      height: 300px;
+                      box-sizing: border-box;
+                      border-bottom: 1px dashed rgba(17, 17, 17, 0.35);
+                      background-image: repeating-linear-gradient(
+                        135deg,
+                        rgba(17, 17, 17, 0.05) 0 1px,
+                        transparent 1px 12px
+                      );
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      padding: 24px;
+                      text-align: center;
+                    "
+                  >
+                    <div
+                      style="
+                        font-size: 13px;
+                        letter-spacing: 0.06em;
+                        text-transform: uppercase;
+                        color: #6b6a65;
+                        line-height: 1.7;
+                      "
+                    >
+                      Graphic placeholder<br />{{st.graphic}}
+                    </div>
+                  </div>
+                  <div style="padding: 32px 28px 40px">
+                    <h3
+                      style="
+                        margin: 0;
+                        font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                        font-weight: 800;
+                        font-size: 26px;
+                        letter-spacing: -0.025em;
+                        text-transform: uppercase;
+                      "
+                    >
+                      {{st.title}}
+                    </h3>
+                    <p
+                      style="
+                        margin: 16px 0 0;
+                        font-size: 15px;
+                        line-height: 1.6;
+                        color: #6b6a65;
+                      "
+                    >
+                      {{st.body}}
+                    </p>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </section>
+
+          <!-- TESTIMONIAL -->
+          <section aria-labelledby="t-h" style="margin-top: 96px">
+            <div class="testimonial-header">
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  font-size: 14px;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: #6b6a65;
+                "
+              >
+                <span
+                  aria-hidden="true"
+                  style="
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    background: #111110;
+                  "
+                ></span
+                ><span>What our clients say</span>
+              </div>
+              <h2
+                data-type
+                id="t-h"
+                style="
+                  margin: 20px 0 0;
+                  font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                  font-weight: 800;
+                  font-size: clamp(34px, 5vw, 60px);
+                  line-height: 1;
+                  letter-spacing: -0.035em;
+                  text-transform: uppercase;
+                  max-width: 760px;
+                "
+              >
+                Words from our clients
+              </h2>
+              <p
+                class="type-reveal-soft"
+                data-type-follow-start="t-h"
+                data-type-follow-delay="400"
+                style="
+                  margin: 24px 0 0;
+                  max-width: 500px;
+                  font-size: 16px;
+                  line-height: 1.6;
+                  color: #6b6a65;
+                "
+              >
+                A few words about the experience of designing and building with
+                25 Homes.
+              </p>
+            </div>
+            <div
+              class="testimonial-stack ease-in ease-in-fade"
+              data-ease="testimonials"
+            >
+              <sc-for list="{{testimonials}}" as="t" hint-placeholder-count="5">
+                <article class="testimonial-card" style="z-index: {{t.z}}">
+                  <div>
+                    <div class="testimonial-mark" aria-hidden="true">“</div>
+                    <blockquote class="testimonial-quote">
+                      {{t.quote}}
+                    </blockquote>
+                  </div>
+                  <div>
+                    <div class="testimonial-name">{{t.name}}</div>
+                    <div class="testimonial-role">{{t.role}}</div>
+                  </div>
+                </article>
+              </sc-for>
+              <div class="testimonial-spacer" aria-hidden="true"></div>
+            </div>
+          </section>
+
+          <!-- GALLERY -->
+          <section aria-labelledby="g-h" style="margin-top: 96px">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 0 40px 56px;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  font-size: 14px;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: #6b6a65;
+                "
+              >
+                <span
+                  aria-hidden="true"
+                  style="
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    background: #111110;
+                  "
+                ></span
+                ><span>Our gallery</span>
+              </div>
+              <h2
+                data-type
+                id="g-h"
+                style="
+                  margin: 20px 0 0;
+                  font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                  font-weight: 800;
+                  font-size: clamp(34px, 5vw, 60px);
+                  line-height: 1;
+                  letter-spacing: -0.035em;
+                  text-transform: uppercase;
+                  max-width: 760px;
+                "
+              >
+                Inside the homes we've built
+              </h2>
+              <p
+                class="type-reveal-soft"
+                data-type-follow-start="g-h"
+                data-type-follow-delay="400"
+                style="
+                  margin: 24px 0 0;
+                  max-width: 500px;
+                  font-size: 16px;
+                  line-height: 1.6;
+                  color: #6b6a65;
+                "
+              >
+                A closer look at the details, materials and moments that define
+                the spaces we build and design.
+              </p>
+            </div>
+            <div class="gallery-track ease-in" data-ease="gallery">
+              <sc-for list="{{gallery}}" as="g" hint-placeholder-count="17">
+                <div class="image-zoom gallery-item">
+                  <img
+                    src="{{g.src}}"
+                    alt="{{g.alt}}"
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      object-fit: cover;
+                      display: block;
+                    "
+                  />
+                </div>
+              </sc-for>
+            </div>
+          </section>
+
+          <!-- FAQ + FORM -->
+          <section id="faq" aria-labelledby="faq-h" style="margin-top: 96px">
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 24px 48px;
+                justify-content: space-between;
+                align-items: flex-end;
+                padding: 0 40px 56px;
+              "
+            >
+              <div style="max-width: 620px">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 14px;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    color: #6b6a65;
+                  "
+                >
+                  <span
+                    aria-hidden="true"
+                    style="
+                      display: inline-block;
+                      width: 12px;
+                      height: 12px;
+                      background: #111110;
+                    "
+                  ></span
+                  ><span>FAQs</span>
+                </div>
+                <h2
+                  data-type
+                  id="faq-h"
+                  style="
+                    margin: 20px 0 0;
+                    font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                    font-weight: 800;
+                    font-size: clamp(34px, 5vw, 60px);
+                    line-height: 1;
+                    letter-spacing: -0.035em;
+                    text-transform: uppercase;
+                  "
+                >
+                  Everything you need to know
+                </h2>
+              </div>
+              <p
+                class="type-reveal-soft"
+                data-type-follow-start="faq-h"
+                data-type-follow-delay="400"
+                style="
+                  margin: 0;
+                  max-width: 380px;
+                  font-size: 16px;
+                  line-height: 1.6;
+                  color: #6b6a65;
+                "
+              >
+                Answers to the questions we hear most, so you know exactly what
+                to expect.
+              </p>
+            </div>
+            <div
+              class="ease-in"
+              data-ease="faq"
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                border-top: 1px solid rgba(17, 17, 17, 0.28);
+                border-bottom: 1px solid rgba(17, 17, 17, 0.28);
+              "
+            >
+              <form
+                id="contact"
+                style="
+                  flex: 1 1 420px;
+                  box-sizing: border-box;
+                  background: #ffffff;
+                  border-right: 1px solid rgba(17, 17, 17, 0.28);
+                  display: block;
+                "
+                onsubmit="return false;"
+              >
+                <div
+                  style="
+                    padding: 40px;
+                    border-bottom: 1px solid rgba(17, 17, 17, 0.2);
+                  "
+                >
+                  <h3
+                    style="
+                      margin: 0;
+                      font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                      font-weight: 800;
+                      font-size: 28px;
+                      line-height: 1.1;
+                      letter-spacing: -0.025em;
+                      text-transform: uppercase;
+                    "
+                  >
+                    Send us your question.<br />We're happy to help.
+                  </h3>
+                </div>
+                <div
+                  style="
+                    padding: 40px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 24px;
+                  "
+                >
+                  <div style="display: flex; flex-wrap: wrap; gap: 24px">
+                    <div
+                      style="
+                        flex: 1 1 180px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                      "
+                    >
+                      <label
+                        for="f-name"
+                        style="
+                          font-size: 14px;
+                          letter-spacing: 0.04em;
+                          text-transform: uppercase;
+                          color: #4a4944;
+                        "
+                        >Name</label
+                      ><input
+                        id="f-name"
+                        type="text"
+                        placeholder="Your name"
+                        style="
+                          height: 48px;
+                          box-sizing: border-box;
+                          padding: 0 14px;
+                          border: 1px solid rgba(17, 17, 17, 0.18);
+                          background: #f4f3ef;
+                          font: inherit;
+                          font-size: 15px;
+                          color: #111110;
+                        "
+                      />
+                    </div>
+                    <div
+                      style="
+                        flex: 1 1 180px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                      "
+                    >
+                      <label
+                        for="f-phone"
+                        style="
+                          font-size: 14px;
+                          letter-spacing: 0.04em;
+                          text-transform: uppercase;
+                          color: #4a4944;
+                        "
+                        >Phone no:</label
+                      ><input
+                        id="f-phone"
+                        type="tel"
+                        placeholder="Your phone number"
+                        style="
+                          height: 48px;
+                          box-sizing: border-box;
+                          padding: 0 14px;
+                          border: 1px solid rgba(17, 17, 17, 0.18);
+                          background: #f4f3ef;
+                          font: inherit;
+                          font-size: 15px;
+                          color: #111110;
+                        "
+                      />
+                    </div>
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 10px">
+                    <label
+                      for="f-email"
+                      style="
+                        font-size: 14px;
+                        letter-spacing: 0.04em;
+                        text-transform: uppercase;
+                        color: #4a4944;
+                      "
+                      >Email</label
+                    ><input
+                      id="f-email"
+                      type="email"
+                      placeholder="you@email.com"
+                      style="
+                        height: 48px;
+                        box-sizing: border-box;
+                        padding: 0 14px;
+                        border: 1px solid rgba(17, 17, 17, 0.18);
+                        background: #f4f3ef;
+                        font: inherit;
+                        font-size: 15px;
+                        color: #111110;
+                      "
+                    />
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 10px">
+                    <label
+                      for="f-msg"
+                      style="
+                        font-size: 14px;
+                        letter-spacing: 0.04em;
+                        text-transform: uppercase;
+                        color: #4a4944;
+                      "
+                      >Message</label
+                    ><textarea
+                      id="f-msg"
+                      placeholder="Tell us about your project..."
+                      style="
+                        height: 160px;
+                        box-sizing: border-box;
+                        padding: 14px;
+                        border: 1px solid rgba(17, 17, 17, 0.18);
+                        background: #f4f3ef;
+                        font: inherit;
+                        font-size: 15px;
+                        color: #111110;
+                        resize: vertical;
+                      "
+                    ></textarea>
+                  </div>
+                  <button
+                    type="button"
+                    style="
+                      align-self: flex-start;
+                      background: #111110;
+                      color: #f4f3ef;
+                      border: 2px solid #111110;
+                      padding: 16px 32px;
+                      font-weight: 600;
+                      font-size: 15px;
+                      letter-spacing: 0.04em;
+                      text-transform: uppercase;
+                      cursor: pointer;
+                    "
+                  >
+                    Submit form
+                  </button>
+                </div>
+              </form>
+              <div style="flex: 1.2 1 460px; box-sizing: border-box">
+                <sc-for list="{{faqs}}" as="f" hint-placeholder-count="7">
+                  <div
+                    style="
+                      border-bottom: 1px solid rgba(17, 17, 17, 0.2);
+                      padding: 0 40px;
+                    "
+                  >
+                    <button
+                      type="button"
+                      onClick="{{f.toggle}}"
+                      aria-expanded="{{f.expanded}}"
+                      style="
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 24px;
+                        padding: 32px 0;
+                        background: none;
+                        border: 0;
+                        text-align: left;
+                        cursor: pointer;
+                        color: #111110;
+                      "
+                    >
+                      <span
+                        style="
+                          font-family:
+                            &quot;Archivo&quot;, system-ui, sans-serif;
+                          font-weight: 800;
+                          font-size: 20px;
+                          letter-spacing: -0.02em;
+                          text-transform: uppercase;
+                        "
+                        >{{f.q}}</span
+                      >
+                      <span
+                        aria-hidden="true"
+                        style="
+                          flex: none;
+                          width: 44px;
+                          height: 44px;
+                          background: #111110;
+                          color: #f4f3ef;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          font-size: 24px;
+                          font-weight: 500;
+                        "
+                        >{{f.sign}}</span
+                      >
+                    </button>
+                    <sc-if
+                      value="{{f.open}}"
+                      hint-placeholder-val="{{ false }}"
+                    >
+                      <p
+                        style="
+                          margin: 0 0 32px;
+                          max-width: 480px;
+                          font-size: 15px;
+                          line-height: 1.7;
+                          color: #6b6a65;
+                        "
+                      >
+                        {{f.a}}
+                      </p>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </section>
+
+          <!-- CTA -->
+          <section
+            aria-labelledby="cta-h"
+            style="
+              background: #0b0b0a;
+              color: #f4f3ef;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              text-align: center;
+              padding: 96px 40px;
+              box-sizing: border-box;
+              background-image:
+                repeating-linear-gradient(
+                  90deg,
+                  rgba(244, 243, 239, 0.05) 0 1px,
+                  transparent 1px 120px
+                ),
+                repeating-linear-gradient(
+                  0deg,
+                  rgba(244, 243, 239, 0.05) 0 1px,
+                  transparent 1px 120px
+                );
+            "
+          >
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 14px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #c9c8c2;
+              "
+            >
+              <span
+                aria-hidden="true"
+                style="
+                  display: inline-block;
+                  width: 12px;
+                  height: 12px;
+                  background: #f4f3ef;
+                "
+              ></span
+              ><span>Get started</span>
+            </div>
+            <h2
+              data-type
+              id="cta-h"
+              style="
+                margin: 24px 0 0;
+                font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                font-weight: 800;
+                font-size: clamp(36px, 6vw, 76px);
+                line-height: 1;
+                letter-spacing: -0.04em;
+                text-transform: uppercase;
+                max-width: 900px;
+              "
+            >
+              Ready to build your dream home?
+            </h2>
+            <p
+              class="type-reveal-soft"
+              data-type-follow-start="cta-h"
+              data-type-follow-delay="400"
+              style="
+                margin: 28px 0 0;
+                max-width: 460px;
+                font-size: 17px;
+                line-height: 1.6;
+                color: #c9c8c2;
+              "
+            >
+              From first sketch to final finish, we're ready to bring your
+              vision to life.
+            </p>
+            <a
+              class="ease-in"
+              data-ease="cta"
+              href="mailto:Twentyfivehomomes@gmail.com"
+              style="
+                margin-top: 40px;
+                display: inline-block;
+                background: #f4f3ef;
+                color: #111110;
+                padding: 18px 40px;
+                font-weight: 600;
+                font-size: 16px;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+              "
+              >Contact us</a
+            >
+            <!-- <div
+              style="
+                margin-top: 28px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px 28px;
+                font-size: 16px;
+                letter-spacing: 0.04em;
+              "
+            >
+              <a href="tel:+2349168140660">09168140660</a>
+              <a href="mailto:Twentyfivehomomes@gmail.com"
+                >Twentyfivehomomes@gmail.com</a
+              >
+            </div> -->
+          </section>
+
+          <!-- FOOTER -->
+          <footer
+            class="ease-in"
+            data-ease="footer"
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              border-bottom: 1px solid rgba(17, 17, 17, 0.28);
+            "
+          >
+            <div
+              style="
+                flex: 1.4 1 320px;
+                box-sizing: border-box;
+                padding: 48px 40px;
+                border-right: 1px solid rgba(17, 17, 17, 0.28);
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  font-family: &quot;Archivo&quot;, system-ui, sans-serif;
+                  font-weight: 800;
+                  font-size: 28px;
+                  letter-spacing: -0.02em;
+                  text-transform: uppercase;
+                "
+              >
+                <span
+                  aria-hidden="true"
+                  style="
+                    display: inline-block;
+                    width: 26px;
+                    height: 26px;
+                    background: #111110;
+                  "
+                ></span
+                ><span>25 Homes</span>
+              </div>
+              <p
+                style="
+                  margin: 0;
+                  max-width: 300px;
+                  font-size: 16px;
+                  line-height: 1.6;
+                  color: #6b6a65;
+                "
+              >
+                Construction • Interiors. We build. We design. Creating spaces
+                worth experiencing.
+              </p>
+              <div
+                style="
+                  margin-top: 24px;
+                  font-size: 14px;
+                  letter-spacing: 0.04em;
+                  text-transform: uppercase;
+                  color: #4a4944;
+                "
+              >
+                Follow us on:
+              </div>
+              <div style="display: flex; gap: 12px">
+                <sc-for list="{{socials}}" as="so" hint-placeholder-count="1">
+                  <a
+                    href="{{so.href}}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="{{so.label}}"
+                    style="
+                      width: 48px;
+                      height: 48px;
+                      box-sizing: border-box;
+                      border: 1px solid rgba(17, 17, 17, 0.28);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-size: 12px;
+                      font-weight: 600;
+                      letter-spacing: 0.04em;
+                    "
+                    >{{so.short}}</a
+                  >
+                </sc-for>
+              </div>
+            </div>
+            <div
+              style="
+                flex: 1 1 200px;
+                box-sizing: border-box;
+                padding: 48px 40px;
+                border-right: 1px solid rgba(17, 17, 17, 0.28);
+              "
+            >
+              <div
+                style="
+                  font-size: 14px;
+                  letter-spacing: 0.04em;
+                  text-transform: uppercase;
+                  color: #6b6a65;
+                "
+              >
+                Main links
+              </div>
+              <div
+                style="
+                  margin-top: 28px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 20px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  letter-spacing: 0.02em;
+                  text-transform: uppercase;
+                "
+              >
+                <a href="#top">Home</a><a href="#studio">About</a
+                ><a href="#services">Services</a><a href="#why">Why us?</a>
+              </div>
+            </div>
+            <div
+              style="
+                flex: 1 1 200px;
+                box-sizing: border-box;
+                padding: 48px 40px;
+                border-right: 1px solid rgba(17, 17, 17, 0.28);
+              "
+            >
+              <div
+                style="
+                  font-size: 14px;
+                  letter-spacing: 0.04em;
+                  text-transform: uppercase;
+                  color: #6b6a65;
+                "
+              >
+                Other pages
+              </div>
+              <div
+                style="
+                  margin-top: 28px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 20px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  letter-spacing: 0.02em;
+                  text-transform: uppercase;
+                "
+              >
+                <a href="#studio">Studio</a><a href="#projects">Projects</a
+                ><a href="#faq">FAQs</a><a href="#contact">Contact</a>
+              </div>
+            </div>
+            <div
+              style="
+                flex: 1.2 1 260px;
+                box-sizing: border-box;
+                padding: 48px 40px;
+              "
+            >
+              <div
+                style="
+                  font-size: 14px;
+                  letter-spacing: 0.04em;
+                  text-transform: uppercase;
+                  color: #6b6a65;
+                "
+              >
+                Quick info:
+              </div>
+              <div
+                style="
+                  margin-top: 28px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 20px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  letter-spacing: 0.02em;
+                  text-transform: uppercase;
+                "
+              >
+                <a href="tel:+2349168140660">09168140660</a>
+                <a href="mailto:Twentyfivehomomes@gmail.com"
+                  >Twentyfivehomomes@gmail.com</a
+                >
+              </div>
+              <div
+                style="
+                  margin-top: 36px;
+                  font-size: 14px;
+                  letter-spacing: 0.04em;
+                  text-transform: uppercase;
+                  color: #6b6a65;
+                "
+              >
+                Location
+              </div>
+              <div
+                style="
+                  margin-top: 16px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  line-height: 1.6;
+                  letter-spacing: 0.02em;
+                  text-transform: uppercase;
+                "
+              >
+                [lAGOS, Nigeria]
+              </div>
+            </div>
+          </footer>
+          <div
+            class="ease-in"
+            data-ease="legal"
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              gap: 12px 24px;
+              justify-content: space-between;
+              padding: 28px 40px;
+              font-size: 14px;
+              color: #4a4944;
+            "
+          >
+            <span>© 2026 25 Homes. All rights reserved.</span>
+            <a
+              href="#top"
+              style="
+                font-weight: 600;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+              "
+              >Back to top</a
+            >
+          </div>
+        </div>
+      </div>
+    </x-dc>
+    <script
+      type="text/x-dc"
+      data-dc-script
+      data-props='{"$preview":{"width":1440,"height":7600}}'
+    >
+      const statTargets = [40, 20, 100, 5];
+      const statSuffix = ['+', '+', '%', '+'];
+      const statLabels = ['Homes built', 'Interiors completed', 'Happy clients', 'Years of experience'];
+      const statDuration = 1800;
+      let statDisplay = [0, 0, 0, 0];
+      let statPlayed = false;
+
+      function formatStat(index, value) {
+        return '[' + value + ']' + statSuffix[index];
+      }
+
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      class Component extends DCLogic {
+      renderVals() {
+      const open = (this.state && this.state.open !== undefined) ? this.state.open : 0;
+
+      const stats = statTargets.map((target, index) => ({
+        index: String(index),
+        final: formatStat(index, target),
+        value: formatStat(index, statDisplay[index]),
+        label: statLabels[index]
+      }));
+
+      const services = [
+      {
+      num: '01/', title: 'Construction',
+      blurb: 'Ground-up home building and major works, managed by one accountable team from foundation to finish.',
+      showImage: true,
+      src: 'images/NEWCONSTRUCTIONINPROG.png',
+      showPlaceholder: false,
+      img: 'Construction · build in progress or finished exterior',
+      items: [{t:'Site assessment'},{t:'Structural works'},{t:'Home construction'},{t:'Project management'},{t:'Renovations'},{t:'Final handover'}]
+      },
+      {
+      num: '02/', title: 'Interiors',
+      blurb: 'Interior design that makes the finished home feel considered, comfortable and entirely yours.',
+      showImage: true,
+      src: 'images/interiordesign.jpg',
+      showPlaceholder: false,
+      img: 'Interiors · styled living space',
+      items: [{t:'Layout planning'},{t:'Material selection'},{t:'Furniture sourcing'},{t:'Colour palettes'},{t:'Lighting plans'},{t:'Final styling'}]
+      }
+      ];
+
+      const why = [
+      { tag:'Design', num:'[01]', showImage: true, src: 'images/Purpose-driven design.png', showPlaceholder: false, graphic:'Isometric drawing · plan and pencils', title:'Purpose-driven design', body:'Every project starts with intent. Form and function are shaped around how you actually live.' },
+      { tag:'One team', num:'[02]', showImage: true, src: 'images/We Build and We Design.png', showPlaceholder: false, graphic:'Isometric drawing · house with interior cutaway', title:'We build and we design', body:'Construction and interiors under one roof, so nothing gets lost between builder and designer.' },
+      { tag:'Quality', num:'[03]', showImage: true, src: 'images/Precision and Lasting Craft.png', showPlaceholder: false, graphic:'Isometric drawing · brick wall or building frame', title:'Precision and lasting craft', body:'Structure, materials and finish, with every detail held to a high standard.' },
+      { tag:'Timeline', num:'[04]', showImage: true, src: 'images/Timelines We Actually Keep.png', showPlaceholder: false, graphic:'Isometric drawing · hourglass and calendar', title:'Timelines we actually keep', body:'Clear planning and steady execution keep every project on track.' },
+      { tag:'Team', num:'[05]', showImage: true, src: 'images/Guided by Real Expertise.png', showPlaceholder: false, graphic:'Isometric drawing · hard hat on blueprints', title:'Guided by real expertise', body:'A skilled team with hands-on experience in home construction and interior design.' },
+      { tag:'Budget', num:'[06]', showImage: true, src: 'images/Pricing with No Surprises.png', showPlaceholder: false, graphic:'Isometric drawing · coins and checkmark', title:'Pricing with no surprises', body:'Transparent costs from day one: no surprises and no hidden fees.' }
+      ];
+
+      const projects = [
+      { cat:'Construction', num:'[01]', showImage: true, src: 'images/MORDERNCOMTEMPORARY.jpg', showPlaceholder: false, img:'Project 01 · exterior, landscape format', name:'Modern contemporary', meta:'Badore, Lagos · 2023–2024' },
+      { cat:'Construction', num:'[02]', showImage: true, src: 'images/PROJECT03.jpg', showPlaceholder: false, img:'Project 02 · exterior, landscape format', name:'The Meridian Residence', meta:'[Lagos] · [2025 - 2026]' },
+      { cat:'Interiors', num:'[03]', showImage: true, src: 'images/interior3.jpg', showPlaceholder: false, img:'Project 03 · interior, landscape format', name:'The Signature Home', meta:'[LAGOS] · [2026]' },
+      { cat:'Interiors', num:'[04]', showImage: true, src: 'images/pROJECT02.jpg', showPlaceholder: false, img:'Project 04 · interior, landscape format', name:'The Artful Residence', meta:'[Lagos] · [2026]' }
+      ];
+
+      const testimonials = [
+      { z: 1, name: 'Amaka Okafor', role: 'Residential Client', quote: 'They listened to what we wanted and helped us make better decisions along the way. The final space feels like home.' },
+      { z: 2, name: 'Chinedu Okafor', role: 'Homeowner', quote: 'What I appreciated most was the communication. I knew what was happening at each stage, and that made the process much easier.' },
+      { z: 3, name: 'Tomiwa Adeyemi', role: 'Interior Design Client', quote: 'The attention to detail really stood out to me. The finishes came together beautifully, and the space feels both practical and well designed.' },
+      { z: 4, name: 'Femi Oladipo', role: 'Residential Client', quote: 'I wanted a home that looked good without losing functionality. The design achieved that balance, and I’m happy with how everything turned out.' },
+      { z: 5, name: 'Bisola Ibrahim', role: 'Renovation Client', quote: 'The renovation made a real difference to how we use our space. Everything feels more considered, comfortable, and suited to our needs.' }
+      ];
+
+      const steps = [
+      { num:'[01]', graphic:'Illustration · conversation / site visit', title:'Discovery', body:'We learn your vision, goals and site through a detailed consultation.' },
+      { num:'[02]', graphic:'Illustration · sketches and plans', title:'Design', body:'Sketches, layouts and design concepts tailored to your home.' },
+      { num:'[03]', graphic:'Illustration · build and finishing', title:'Build and deliver', body:'We build, furnish and refine with your feedback, then hand over a finished home.' }
+      ];
+
+      const gallery = [
+      { src: 'images/PHOTO-2026-10-14-19-42-38 2.jpg', alt: 'Architectural rendering of a modern contemporary house' },
+      { src: 'images/PHOTO-2026-10-14-19-42-38.jpg', alt: 'Finished modern house exterior with glass balconies' },
+      { src: 'images/PHOTO-2026-10-14-19-42-39 2.jpg', alt: 'Side view of a modern white house' },
+      { src: 'images/PHOTO-2026-10-14-19-42-39.jpg', alt: 'Modern house facade with dark vertical cladding' },
+      { src: 'images/IMG_0753.jpg', alt: 'Living room with a curved beige sofa and crystal chandelier' },
+      { src: 'images/IMG_1449.jpg', alt: 'Courtyard pool under construction beside a white house' },
+      { src: 'images/IMG_3548.jpg', alt: 'Rooftop pool with a steel pergola frame during construction' },
+      { src: 'images/IMG_4492.jpg', alt: 'Classical house facade under scaffolding' },
+      { src: 'images/IMG_6457.jpg', alt: 'Tiling a bathroom with a laser level' },
+      { src: 'images/IMG_6687.jpg', alt: 'Cream classical house with columns and a hanging chandelier' },
+      { src: 'images/IMG_7968.jpg', alt: 'Blockwork house with window openings during construction' },
+      { src: 'images/IMG_7981.jpg', alt: 'Living room being furnished under a crystal chandelier' },
+      { src: 'images/IMG_8395.jpg', alt: 'Bedroom with a padded headboard and green armchairs' },
+      { src: 'images/IMG_8800.jpg', alt: 'Concrete house frame wrapped in scaffolding' },
+      { src: 'images/IMG_9478.jpg', alt: 'Columned entrance of a house under construction' },
+      { src: 'images/IMG_9562.jpg', alt: 'Evening garden with brick planters and path lights' },
+      { src: 'images/IMG_9566.jpg', alt: 'Driveway and entrance of a finished classical house at dusk' }
+      ];
+
+      const faqData = [
+      ['Do you handle both construction and interiors?', 'Yes. 25 Homes builds the home and designs the interiors, so one team carries your project from first sketch to final styling.'],
+      ['Can you work within my budget?', 'We tailor every proposal to your budget without compromising on quality, and costs are clear from day one.'],
+      ['How long does a typical project take?', 'Project timelines depend on the size, complexity, and scope of the work. Interior design projects may take 4–12 weeks, while full home construction can take 6–12 months or longer. Before work begins, we establish a clear timeline with key milestones and keep you informed throughout the process.'],
+      ['Do I need to have a design idea already?', 'Not at all. We help shape your ideas from the very first conversation.'],
+      ['Can you work on renovations too?', 'Yes, we handle renovations and remodelling projects of all sizes, from refreshing individual rooms to transforming entire homes. We bring the same attention to detail and quality craftsmanship to every project.'],
+      ['Do you work with contractors?', 'Yes, we work with trusted contractors to ensure the highest quality of work. We have a team of experienced builders and tradespeople who are dedicated to delivering exceptional results.'],
+      ];
+      const faqs = faqData.map((d, i) => ({
+      q: d[0], a: d[1],
+      open: open === i,
+      expanded: open === i ? 'true' : 'false',
+      sign: open === i ? '×' : '+',
+      toggle: () => this.setState({ open: open === i ? -1 : i })
+      }));
+
+      const socials = [
+      { label: 'Instagram', short: 'IG', href: 'https://www.instagram.com/25homes__/' }
+      ];
+
+      return { stats, services, why, projects, testimonials, steps, gallery, faqs, socials };
+      }
+
+      componentDidMount() {
+        if (statPlayed) return;
+        const row = document.getElementById('stats-figures');
+        if (!row) return;
+        const start = () => {
+          if (statPlayed || this._statFrame) return;
+          if (this._statObserver) {
+            this._statObserver.disconnect();
+            this._statObserver = null;
+          }
+          const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (reduce) {
+            statDisplay = statTargets.slice();
+            statPlayed = true;
+            this.forceUpdate();
+            return;
+          }
+          this.animateStats();
+        };
+        if (!('IntersectionObserver' in window)) {
+          start();
+          return;
+        }
+        this._statObserver = new IntersectionObserver((entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) start();
+        }, { threshold: 0.25 });
+        this._statObserver.observe(row);
+      }
+
+      animateStats() {
+        const started = performance.now();
+        const tick = (now) => {
+          const progress = Math.min(1, (now - started) / statDuration);
+          const eased = easeOutCubic(progress);
+          const nodes = document.querySelectorAll('#stats-figures [data-stat-index]');
+          statTargets.forEach((target, index) => {
+            const value = progress === 1 ? target : Math.round(eased * target);
+            statDisplay[index] = value;
+            const node = document.querySelector('#stats-figures [data-stat-index="' + index + '"]');
+            if (node) node.textContent = formatStat(index, value);
+          });
+          if (progress < 1) {
+            this._statFrame = requestAnimationFrame(tick);
+          } else {
+            statPlayed = true;
+            this._statFrame = 0;
+          }
+        };
+        this._statFrame = requestAnimationFrame(tick);
+      }
+
+      componentWillUnmount() {
+        if (this._statFrame) cancelAnimationFrame(this._statFrame);
+        this._statFrame = 0;
+        if (this._statObserver) this._statObserver.disconnect();
+        this._statObserver = null;
+      }
+      }
+    </script>
+    <script>
+      (function () {
+        var reduce = false;
+        try {
+          reduce = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+          ).matches;
+        } catch (err) {}
+        if (reduce || !document.documentElement.classList.contains("js-typing"))
+          return;
+
+        var played = new Set();
+        var prepared = new WeakSet();
+        var typeChain = Promise.resolve();
+        var fontsReady =
+          (document.fonts && document.fonts.ready) || Promise.resolve();
+        var TYPE_SEL = "h1[data-type], h2[data-type]";
+        var io = null;
+
+        function sleep(ms) {
+          return new Promise(function (resolve) {
+            setTimeout(resolve, ms);
+          });
+        }
+
+        function num(el, name, fallback) {
+          var raw = el.getAttribute(name);
+          if (raw == null || raw === "") return fallback;
+          var n = Number(raw);
+          return isFinite(n) ? n : fallback;
+        }
+
+        function readableLabel(el) {
+          var bits = [];
+          Array.prototype.forEach.call(el.childNodes, function (node) {
+            if (node.nodeName === "BR") bits.push(" ");
+            else if (node.nodeType === 3) {
+              var t = node.textContent.replace(/\s+/g, " ").trim();
+              if (t) bits.push(t);
+            }
+          });
+          return bits.join(" ").replace(/\s+/g, " ").trim();
+        }
+
+        function appendText(frag, text) {
+          var trimmed = text.replace(/\s+/g, " ").trim();
+          if (!trimmed) return;
+          trimmed.split(" ").forEach(function (word, i) {
+            if (i > 0) {
+              var gap = document.createElement("span");
+              gap.className = "tw-gap";
+              gap.setAttribute("aria-hidden", "true");
+              gap.textContent = " ";
+              frag.appendChild(gap);
+            }
+            var wrap = document.createElement("span");
+            wrap.className = "tw";
+            wrap.setAttribute("aria-hidden", "true");
+            for (var c = 0; c < word.length; c++) {
+              var span = document.createElement("span");
+              span.className = "ch";
+              span.textContent = word.charAt(c);
+              wrap.appendChild(span);
+            }
+            frag.appendChild(wrap);
+          });
+        }
+
+        function split(el) {
+          if (el.querySelector(".ch")) return;
+          var label = readableLabel(el);
+          if (!label) return;
+          var frag = document.createDocumentFragment();
+          Array.prototype.forEach.call(el.childNodes, function (node) {
+            if (node.nodeName === "BR")
+              frag.appendChild(document.createElement("br"));
+            else if (node.nodeType === 3) appendText(frag, node.textContent);
+          });
+          el.setAttribute("aria-label", label);
+          el.textContent = "";
+          el.appendChild(frag);
+        }
+
+        function showFollowers(id, animate) {
+          if (!id) return;
+          var nodes = document.querySelectorAll(
+            '[data-type-follow="' + id + '"]',
+          );
+          Array.prototype.forEach.call(nodes, function (el) {
+            if (!animate) el.classList.add("no-anim");
+            el.classList.add("is-in");
+          });
+        }
+
+        function headingSettled(id) {
+          var el = document.getElementById(id);
+          if (!el) return true;
+          var chars = el.querySelectorAll(".ch");
+          if (!chars.length) return true;
+          return el.querySelectorAll(".ch.on").length === chars.length;
+        }
+
+        function revealStartFollowers(id, animate) {
+          if (!id) return;
+          var nodes = document.querySelectorAll(
+            '[data-type-follow-start="' + id + '"]',
+          );
+          Array.prototype.forEach.call(nodes, function (el) {
+            if (el.classList.contains("is-in")) return;
+            if (!animate) el.classList.add("no-anim");
+            var delay = animate ? num(el, "data-type-follow-delay", 400) : 0;
+            setTimeout(function () {
+              if (!el.isConnected) return;
+              el.classList.add("is-in");
+            }, delay);
+          });
+        }
+
+        function headingKey(el) {
+          return el.id || el.getAttribute("aria-label") || readableLabel(el);
+        }
+
+        function ensureObserver() {
+          if (io || !("IntersectionObserver" in window)) return io;
+          io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                var el = entry.target;
+                var key = headingKey(el);
+                io.unobserve(el);
+                if (!key || played.has(key)) return;
+                played.add(key);
+                queueType(el);
+              });
+            },
+            { threshold: 0.1, rootMargin: "0px 0px -8% 0px" },
+          );
+          return io;
+        }
+
+        function delayAfter(el, ch, wordEnd) {
+          var speed = num(el, "data-type-speed", 38);
+          var jitter = num(el, "data-type-jitter", 15);
+          var ms = speed + (Math.random() * 2 - 1) * jitter;
+          if (wordEnd || /[.,?\u2014]/.test(ch)) ms += 140;
+          return Math.max(20, ms);
+        }
+
+        function wantsCaret(el) {
+          var v = el.getAttribute("data-type-caret");
+          return v == null || v === "" || v === "true";
+        }
+
+        function nextCharSibling(ch) {
+          var n = ch.nextElementSibling;
+          if (n && n.classList.contains("type-caret")) n = n.nextElementSibling;
+          return n && n.classList.contains("ch") ? n : null;
+        }
+
+        function removeCaret(caret) {
+          if (caret && caret.parentNode) caret.parentNode.removeChild(caret);
+        }
+
+        function typewrite(el) {
+          return new Promise(function (resolve) {
+            var chars = el.querySelectorAll(".ch");
+            if (!chars.length) {
+              resolve();
+              return;
+            }
+            Array.prototype.forEach.call(
+              document.querySelectorAll(".type-caret"),
+              function (node) {
+                if (!el.contains(node)) removeCaret(node);
+              },
+            );
+            var caret = null;
+            if (wantsCaret(el)) {
+              caret = document.createElement("span");
+              caret.className = "type-caret";
+              caret.setAttribute("aria-hidden", "true");
+              chars[0].parentNode.insertBefore(caret, chars[0]);
+            }
+            if (el.id) revealStartFollowers(el.id, true);
+            var i = 0;
+            var settled = false;
+            function finish() {
+              if (settled) return;
+              settled = true;
+              resolve();
+            }
+            function retireCaret() {
+              if (!caret) {
+                finish();
+                return;
+              }
+              setTimeout(function () {
+                if (!caret.isConnected) {
+                  finish();
+                  return;
+                }
+                caret.classList.add("is-done");
+                setTimeout(function () {
+                  removeCaret(caret);
+                  finish();
+                }, 300);
+              }, 2000);
+            }
+            function step() {
+              if (!el.isConnected) {
+                removeCaret(caret);
+                finish();
+                return;
+              }
+              var ch = chars[i];
+              var wordEnd = !nextCharSibling(ch);
+              var text = ch.textContent;
+              ch.classList.add("on");
+              if (caret) ch.after(caret);
+              i += 1;
+              if (i < chars.length)
+                setTimeout(step, delayAfter(el, text, wordEnd));
+              else {
+                if (el.id) showFollowers(el.id, true);
+                finish();
+                retireCaret();
+              }
+            }
+            setTimeout(step, delayAfter(el, "", false));
+          });
+        }
+
+        function queueType(el) {
+          var delay = num(el, "data-type-delay", 0);
+          typeChain = typeChain
+            .then(function () {
+              if (!el.isConnected) return;
+              return Promise.race([fontsReady, sleep(2500)]);
+            })
+            .then(function () {
+              if (!el.isConnected) return;
+              if (delay) return sleep(delay);
+            })
+            .then(function () {
+              if (!el.isConnected) return;
+              return typewrite(el);
+            })
+            .catch(function (err) {
+              console.error(err);
+            });
+        }
+
+        function prepare(el) {
+          if (prepared.has(el)) return;
+          var key = headingKey(el);
+          if (!key) return;
+          prepared.add(el);
+          if (played.has(key)) {
+            if (el.id) {
+              showFollowers(el.id, false);
+              revealStartFollowers(el.id, false);
+            }
+            return;
+          }
+          split(el);
+          if (!el.querySelector(".ch")) return;
+          var trigger = el.getAttribute("data-type-trigger") || "view";
+          if (trigger === "load") {
+            played.add(key);
+            queueType(el);
+            return;
+          }
+          if (el.tagName === "H2") {
+            var observer = ensureObserver();
+            if (observer) observer.observe(el);
+            else {
+              played.add(key);
+              queueType(el);
+            }
+          }
+        }
+
+        var eased = new Set();
+        var easeSeen = new WeakSet();
+        var easeIo = null;
+
+        function markEase(el, animate) {
+          var key = el.getAttribute("data-ease");
+          if (!key || el.classList.contains("is-in")) return;
+          eased.add(key);
+          if (!animate) {
+            el.classList.add("no-anim", "is-in");
+            return;
+          }
+          var delay = num(el, "data-ease-delay", 0);
+          window.setTimeout(function () {
+            el.classList.add("is-in");
+          }, delay);
+        }
+
+        function ensureEaseObserver() {
+          if (easeIo) return easeIo;
+          if (!("IntersectionObserver" in window)) return null;
+          easeIo = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                easeIo.unobserve(entry.target);
+                markEase(entry.target, true);
+              });
+            },
+            { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+          );
+          return easeIo;
+        }
+
+        function prepareEase(el) {
+          if (easeSeen.has(el)) return;
+          var key = el.getAttribute("data-ease");
+          if (!key) return;
+          easeSeen.add(el);
+          if (eased.has(key)) {
+            markEase(el, false);
+            return;
+          }
+          var observer = ensureEaseObserver();
+          if (!observer) markEase(el, true);
+          else observer.observe(el);
+        }
+
+        function scan(root) {
+          if (!root || root.nodeType !== 1) return;
+          if (root.closest && root.closest("x-dc")) return;
+          var easeFound = [];
+          if (root.matches && root.matches(".ease-in")) easeFound.push(root);
+          if (root.querySelectorAll) {
+            Array.prototype.forEach.call(
+              root.querySelectorAll(".ease-in"),
+              function (el) {
+                easeFound.push(el);
+              },
+            );
+          }
+          easeFound.forEach(prepareEase);
+          var found = [];
+          if (root.matches && root.matches(TYPE_SEL)) found.push(root);
+          if (root.querySelectorAll) {
+            Array.prototype.forEach.call(
+              root.querySelectorAll(TYPE_SEL),
+              function (el) {
+                found.push(el);
+              },
+            );
+          }
+          found.forEach(prepare);
+          Array.prototype.forEach.call(
+            document.querySelectorAll("[data-type-follow]"),
+            function (el) {
+              var id = el.getAttribute("data-type-follow");
+              if (id && played.has(id) && !el.classList.contains("is-in"))
+                showFollowers(id, false);
+            },
+          );
+          Array.prototype.forEach.call(
+            document.querySelectorAll("[data-type-follow-start]"),
+            function (el) {
+              var id = el.getAttribute("data-type-follow-start");
+              if (
+                id &&
+                played.has(id) &&
+                headingSettled(id) &&
+                !el.classList.contains("is-in")
+              )
+                revealStartFollowers(id, false);
+            },
+          );
+        }
+
+        var mo = new MutationObserver(function (records) {
+          records.forEach(function (rec) {
+            Array.prototype.forEach.call(rec.addedNodes, function (node) {
+              if (node.nodeType === 1) scan(node);
+            });
+          });
+        });
+        mo.observe(document.documentElement, {
+          childList: true,
+          subtree: true,
+        });
+      })();
+    </script>
+  </body>
+</html>
