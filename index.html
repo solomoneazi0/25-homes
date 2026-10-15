@@ -418,10 +418,14 @@
         #top p {
           margin-top: 16px !important;
         }
-        #top > a {
+        .hero-actions {
           margin-top: 24px !important;
-          padding: 16px 28px !important;
-          font-size: 15px !important;
+          flex-wrap: nowrap !important;
+          gap: 8px !important;
+        }
+        .hero-actions a {
+          padding: 14px 16px !important;
+          font-size: 14px !important;
           min-height: 48px;
           box-sizing: border-box;
         }
@@ -811,24 +815,50 @@
               Creating spaces worth experiencing. From first sketch to final
               handover, one studio for your home build and your interiors.
             </p>
-            <a
-              class="type-reveal"
+            <div
+              class="type-reveal hero-actions"
               data-type-follow="hero-heading"
-              href="#projects"
               style="
                 margin-top: 36px;
-                display: inline-block;
-                background: #111110;
-                color: #f4f3ef;
-                border: 2px solid #111110;
-                padding: 18px 36px;
-                font-weight: 600;
-                font-size: 16px;
-                letter-spacing: 0.04em;
-                text-transform: uppercase;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px;
               "
-              >View our work</a
             >
+              <a
+                href="#projects"
+                style="
+                  display: inline-block;
+                  background: #111110;
+                  color: #f4f3ef;
+                  border: 2px solid #111110;
+                  padding: 18px 36px;
+                  font-weight: 600;
+                  font-size: 16px;
+                  letter-spacing: 0.04em;
+                  text-transform: uppercase;
+                "
+                >View our work</a
+              >
+              <a
+                href="https://wa.me/2349168140660"
+                target="_blank"
+                rel="noopener noreferrer"
+                style="
+                  display: inline-block;
+                  background: transparent;
+                  color: #111110;
+                  border: 2px solid #111110;
+                  padding: 18px 36px;
+                  font-weight: 600;
+                  font-size: 16px;
+                  letter-spacing: 0.04em;
+                  text-transform: uppercase;
+                "
+                >Contact us</a
+              >
+            </div>
 
             <div
               class="image-zoom ease-in"
@@ -1617,7 +1647,9 @@
                 You've seen our work. Now, we can't wait to hear from you..
               </p>
               <a
-                href="mailto:Twentyfivehomomes@gmail.com"
+                href="https://wa.me/2349168140660"
+                target="_blank"
+                rel="noopener noreferrer"
                 style="
                   display: inline-block;
                   background: #111110;
@@ -1646,36 +1678,30 @@
             "
           >
             <div
-              class="ease-in"
+              class="image-zoom ease-in"
               data-ease="studio-visual"
               style="
                 flex: 1 1 440px;
                 min-height: 460px;
                 box-sizing: border-box;
-                background-image: repeating-linear-gradient(
-                  135deg,
-                  rgba(17, 17, 17, 0.07) 0 1px,
-                  transparent 1px 12px
-                );
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 24px;
-                text-align: center;
+                position: relative;
+                overflow: hidden;
                 border-right: 1px solid rgba(17, 17, 17, 0.28);
               "
             >
-              <div
+              <img
+                src="images/teamimg.jpeg"
+                alt="Seated portrait for the 25 Homes studio"
                 style="
-                  font-size: 14px;
-                  letter-spacing: 0.06em;
-                  text-transform: uppercase;
-                  color: #6b6a65;
-                  line-height: 1.7;
+                  position: absolute;
+                  inset: 0;
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  object-position: center;
+                  display: block;
                 "
-              >
-                Image placeholder<br />Studio · team on site or founder portrait
-              </div>
+              />
             </div>
             <div
               style="
@@ -2814,9 +2840,9 @@
       data-dc-script
       data-props='{"$preview":{"width":1440,"height":7600}}'
     >
-      const statTargets = [40, 20, 100, 5];
+      const statTargets = [15, 20, 100, 5];
       const statSuffix = ['+', '+', '%', '+'];
-      const statLabels = ['Homes built', 'Interiors completed', 'Happy clients', 'Years of experience'];
+      const statLabels = ['Homes built', 'Interiors completed', 'Satisfied clients', 'Years of experience'];
       const statDuration = 1800;
       let statDisplay = [0, 0, 0, 0];
       let statPlayed = false;
